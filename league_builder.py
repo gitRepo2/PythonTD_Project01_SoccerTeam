@@ -1,5 +1,5 @@
 import csv
-import random
+import os
 # Python Techdegree Project 01 - Soccer Team - Lukas Straumann
 
 
@@ -67,9 +67,19 @@ def writing_to_file(league,teams,soccer_players_assigned): # Write a list of the
         f.write('\n')
     f.close()
 
+def create_a_folder(rel_path):
+    try:
+        if not os.path.exists(rel_path):
+            os.makedirs(rel_path)
+    except OSError:
+        print('Error: Creating path '.format(path))
+
 def writing_files(soccer_players_assigned): # Create invite letter files
+    rel_path = './letters/'
+    create_a_folder(rel_path)
     for player in soccer_players_assigned:
-        f = open('{}.txt'.format(player['Name'].lower().replace(' ','_')), 'w')
+        path = os.path.join(rel_path,'{}.txt'.format(player['Name'].lower().replace(' ','_')))
+        f = open(path, 'w')
         f.write('Dear {}\n\n'.format(player['Name']))
         f.write('''Welcome to this year's soccer season. We're going
 to have a great time. You will be strengthening
